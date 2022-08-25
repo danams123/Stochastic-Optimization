@@ -1,29 +1,60 @@
-from customer import Customer
+from static_objects.customer import Customer
 
 
 class Queue:
-    def __init__(self):
+    MAX_CUSTOMERS = 15
+
+    def __init__(self, id: int, max_customers:int=MAX_CUSTOMERS):
+        self.id = id
+        self.max_customers = max_customers
         self.waiting_list = []
+        self.type = "Queue"
+        self.rate = 0
 
-    def add_customer(self, customer: Customer):
-        self.waiting_list.append(customer)
+    def get_id(self) -> int:
+        return self.id
 
-    def remove_customer(self):
-        self.waiting_list.pop(0)
+    def get_waiting_list(self) -> list[Customer]:
+        return self.waiting_list
 
-    # Maybe time left for buying should drop by some value time and not 1
-    def update_waiting_time(self):
-        self.waiting_list[0].buying_time = self.waiting_list[0].buying_time - 1
+    def get_max_customers(self) -> int:
+        return self.max_customers
+
+    def get_rate(self) -> int:
+        return self.rate
+
+    def get_type(self) -> str:
+        return self.type
+
+    def enter_customer(self, customer: Customer) -> bool:
+        if len(self.waiting_list) < self.max_customers:
+            self.waiting_list.append(customer)
+            customer.start_shopping(self)
+            return True
+        return False
+
+    def leave_customer(self, customer: Customer) -> bool:
+        if len(self.waiting_list) > 0:
+            self.waiting_list.remove(customer)
+            customer.end_shopping()
+            return True
+        return False
 
 
-# Atmost 10 merchandise
 class FastQueue(Queue):
-
-    def __init__(self):
-        super.__init__()
-
+    def __init__(self, id: int ,max_customers: int):
+        super().__init__(id, max_customers)
+        self.rate = 10
+        self.type = "FastQueue"
 
 class NormalQueue(Queue):
+    def __init__(self, id: int ,max_customers: int):
+        super().__init__(id, max_customers)
+        self.rate = 5
+        self.type = "NormalQueue"
 
-    def __init__(self):
-        super.__init__()
+class SlowQueue(Queue):
+    def __init__(self, id: int ,max_customers: int):
+        super().__init__(id, max_customers)
+        self.rate = 1
+        self.type = "SlowQueue"
