@@ -37,5 +37,3 @@ class Customer:
         self.receipts.append(receipt)
         self.entry_time = 0
         self.merchandise = 0
-
-

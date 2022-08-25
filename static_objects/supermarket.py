@@ -46,6 +46,7 @@ class Supermarket:
     def run(self, customers: list[Customer]):
         pass
 
+
     def handle_supermarket(self):
         pass
 
