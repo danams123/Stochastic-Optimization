@@ -1,13 +1,15 @@
-from main import RUN
 
 class Logger:
     def __init__(self):
         self.TIME = 0
+        self.RUN = True
         self.normal_total_customers = 0
         self.smart_total_customers = 0
         self.normal_total_time = 0
         self.smart_total_time = 0
 
+    def set_run(self):
+        self.RUN = False
 
     def set_normal_values(self, total_customers: int, total_time: int):
         self.normal_total_customers = total_customers

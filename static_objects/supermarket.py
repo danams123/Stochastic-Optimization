@@ -1,7 +1,6 @@
 from threading import Thread
 
 from static_objects.logger import Logger
-from static_objects.customer import Customer
 from static_objects.queue import Queue, NormalQueue, FastQueue, SlowQueue
 
 
@@ -14,9 +13,9 @@ class Supermarket:
         self.num_of_customers = 0
 
     def _create_queues(self, num_fast: int=0, num_normal: int=0, num_slow: int=0):
-        self.queues["fast"] = [FastQueue(i) for i in range(num_fast)]
-        self.queues["normal"] = [NormalQueue(i) for i in range(num_normal)]
-        self.queues["slow"] = [SlowQueue(i) for i in range(num_slow)]
+        self.queues["fast"] = [FastQueue(i, 225) for i in range(num_fast)]
+        self.queues["normal"] = [NormalQueue(i, 225) for i in range(num_normal)]
+        self.queues["slow"] = [SlowQueue(i, 225) for i in range(num_slow)]
 
     def get_id(self):
         return self.id
@@ -30,27 +29,27 @@ class Supermarket:
     def get_num_of_customers(self):
         return self.num_of_customers
 
-    def _enter_customer(self, customer: Customer, queue: Queue):
+    def _enter_customer(self, customer, queue: Queue):
         if queue.enter_customer(customer):
             self.num_of_customers += 1
             return True
         return False
 
 
-    def _leave_customer(self, customer: Customer):
+    def _leave_customer(self, customer):
         if customer.queue.leave_customer(customer):
             self.num_of_customers -= 1
             return True
         return False
 
-    def run(self, customers: list[Customer]):
+    def run(self, customers):
         pass
 
 
     def handle_supermarket(self):
         pass
 
-    def update_queues(self, waiting_list: list[Customer], queues: list[Queue]):
+    def update_queues(self, waiting_list, queues):
         pass
 
 
@@ -60,10 +59,10 @@ class NormalSupermarket(Supermarket):
         self.queues = self._create_queues()
         self.type = "NormalSupermarket"
 
-    def _create_queues(self) -> Any:
+    def _create_queues(self):
         super()._create_queues(num_fast=1, num_normal=self.max_queues-1)
 
-    def start(self, customers: list[Customer]):
+    def start(self, customers):
         enter_thread = Thread(target=self.enter, args=(customers))
         leave_thread = Thread(target=self.leave, args=(customers))
         enter_thread.start()
@@ -72,14 +71,14 @@ class NormalSupermarket(Supermarket):
         leave_thread.join()
         return
 
-    def leave(self, customers: list[Customer]):
+    def leave(self, customers):
         customers.sort(key=lambda customer: customer.entry_time + (customer.merchandise * customer.queue.rate))
         for customer in customers:
             while customer.entry_time + (customer.merchandise * customer.queue.rate) < Logger.TIME:
                 continue
             self._leave_customer(customer)
 
-    def run(self, customers: list[Customer]) -> Any:
+    def enter(self, customers):
         while True:
             for customer in customers:
                 while customer.entry_time < Logger.TIME:
@@ -102,10 +101,10 @@ class SmartSupermarket(Supermarket):
         self.type = "SmartSupermarket"
 
     def _create_queues(self):
-        num_queues = self.max_queues / 3
+        num_queues = self.max_queues // 3
         super()._create_queues(num_fast=num_queues, num_normal=num_queues, num_slow=num_queues)
 
-    def _calc_priority(self, customer: Customer):
+    def _calc_priority(self, customer):
         receipts_avg_time = 0
         weight = 1
         for i in range(len(customer.receipts)):
@@ -114,7 +113,7 @@ class SmartSupermarket(Supermarket):
             weight = self.weight
         return (weight * (customer.entry_time + (customer.merchandise / 2)) + (1 - weight) * receipts_avg_time) * 3
 
-    def start(self, customers: list[Customer]):
+    def start(self, customers):
         enter_thread = Thread(target=self.enter, args=(customers))
         leave_thread = Thread(target=self.leave, args=(customers))
         enter_thread.start()
@@ -123,14 +122,14 @@ class SmartSupermarket(Supermarket):
         leave_thread.join()
         return
 
-    def leave(self, customers: list[Customer]):
+    def leave(self, customers):
         customers.sort(key=lambda customer: customer.entry_time + (customer.merchandise / 2))
         for customer in customers:
             while customer.entry_time + (customer.merchandise / 2) < Logger.TIME:
                 continue
             self._leave_customer(customer)
 
-    def enter(self, customers: list[Customer]) -> Any:
+    def enter(self, customers):
         customers.sort(key=lambda customer: customer.entry_time)
         for customer in customers:
             while customer.entry_time < Logger.TIME:
