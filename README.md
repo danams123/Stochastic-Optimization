@@ -7,8 +7,11 @@ This project is to compare and optimize waiting time in queues in supermarket be
   1. First algorithm: basic algorithm represents normal supermarket.
   2. Our algorithm: aims to decrease the waiting time and to increase cashiers productivity.
 3. Results: total time of handling customers in normal supermarket, and total time of handling customers in our supermarket.
+
    example of result:
+   
    ![‏‏צילום מסך (4)](https://user-images.githubusercontent.com/79909054/187049397-b195336f-c3a3-454d-8b07-3de7c76814dd.png)
+
 
 
 **requirements**
