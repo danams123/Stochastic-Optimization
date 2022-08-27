@@ -1,5 +1,5 @@
 # Stochastic-Optimization
-This project is to compare and optimize between waiting time in queues in supermarket between normal queues and faster queues we implemented.
+This project is to compare and optimize waiting time in queues in supermarket between normal queues and faster queues we implemented.
 
 **requirements**
 - Python installed(click [this link](https://www.python.org/downloads/) if you didn't downloaded/installed python).
