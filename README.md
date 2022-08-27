@@ -2,8 +2,8 @@
 This project is to compare and optimize waiting time in queues in supermarket between normal queues and faster queues we implemented.
 
 **Flow Of Code**
-1. Generating random customers data.
-2. Running two algorithms on the customers data:
+1. Generating random customers and reciepts data.
+2. Running two algorithms on the data:
   1. First algorithm: basic algorithm represents normal supermarket.
   2. Our algorithm: aims to decrease the waiting time and to increase cashiers productivity.
 3. Results: total time of handling customers in normal supermarket, and total time of handling customers in our supermarket.
