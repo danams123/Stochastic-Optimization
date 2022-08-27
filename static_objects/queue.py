@@ -1,5 +1,5 @@
 class Queue:
-    MAX_CUSTOMERS = 15
+    MAX_CUSTOMERS = 10
 
     def __init__(self, id: int, max_customers:int=MAX_CUSTOMERS):
         self.id = id

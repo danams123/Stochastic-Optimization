@@ -1,7 +1,7 @@
 class Receipt:
-    def __init__(self, id: int, waiting_time: int, customer, supermarket):
-        self.id = id
-        self.waiting_time = waiting_time
+    def __init__(self, id: str, waiting_time: str, customer, supermarket):
+        self.id: int = int(id)
+        self.waiting_time: int = int(waiting_time)
         self.customer = customer
         self.supermarket = supermarket
 

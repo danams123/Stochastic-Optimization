@@ -10,7 +10,7 @@ import random
 
 def write_r(csv_writer, num: int, customer_id, id):
     for i in range(num):
-        waiting_time = random.randint(1, 100)
+        waiting_time = random.randint(1, 200)
         supermarket = random.randint(1, 2)
         csv_writer.writerow({"id": id + i, "customer": customer_id, "waiting_time": waiting_time, "supermarket": supermarket})
 
@@ -20,7 +20,7 @@ def write_csv():
     with open('receipts.csv', 'w') as file:
         fieldnames = ["id", "customer", "waiting_time", "supermarket"]
         csv_writer = csv.DictWriter(file, fieldnames=fieldnames)
-        csv_writer.writeheader()
+        # csv_writer.writeheader()
         id = 1
         customer_count = 100
         for i in range(customer_count):
@@ -31,11 +31,11 @@ def write_csv():
     with open('customers.csv', 'w') as file:
         fieldnames = ["id", "entry_time", "merchandise"]
         csv_writer = csv.DictWriter(file, fieldnames=fieldnames)
-        csv_writer.writeheader()
+        # csv_writer.writeheader()
         customer_count = 100
         for i in range(customer_count):
-            entry_time = random.randint(1, 1000)
-            merchandise = random.randint(1, 1000)
+            entry_time = random.randint(1, 100)
+            merchandise = random.randint(1, 90)
             id += num_of_r
             csv_writer.writerow(
                 {"id": i, "entry_time": entry_time, "merchandise": merchandise})
