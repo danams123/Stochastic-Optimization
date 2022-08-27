@@ -1,10 +1,7 @@
-from customer import Customer
-from supermarket import Supermarket
-
 class Receipt:
-    def __init__(self, id: int, waiting_time: int, customer: Customer, supermarket: Supermarket):
-        self.id = id
-        self.waiting_time = waiting_time
+    def __init__(self, id: str, waiting_time: str, customer, supermarket):
+        self.id: int = int(id)
+        self.waiting_time: int = int(waiting_time)
         self.customer = customer
         self.supermarket = supermarket
 
@@ -14,9 +11,9 @@ class Receipt:
     def get_waiting_time(self) -> int:
         return self.waiting_time
 
-    def get_customer(self) -> Customer:
+    def get_customer(self):
         return self.customer
 
-    def get_supermarket(self) -> Supermarket:
+    def get_supermarket(self):
         return self.supermarket
 

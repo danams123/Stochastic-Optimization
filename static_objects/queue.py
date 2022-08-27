@@ -1,8 +1,5 @@
-from static_objects.customer import Customer
-
-
 class Queue:
-    MAX_CUSTOMERS = 15
+    MAX_CUSTOMERS = 10
 
     def __init__(self, id: int, max_customers:int=MAX_CUSTOMERS):
         self.id = id
@@ -14,7 +11,7 @@ class Queue:
     def get_id(self) -> int:
         return self.id
 
-    def get_waiting_list(self) -> list[Customer]:
+    def get_waiting_list(self):
         return self.waiting_list
 
     def get_max_customers(self) -> int:
@@ -26,14 +23,14 @@ class Queue:
     def get_type(self) -> str:
         return self.type
 
-    def enter_customer(self, customer: Customer) -> bool:
+    def enter_customer(self, customer) -> bool:
         if len(self.waiting_list) < self.max_customers:
             self.waiting_list.append(customer)
             customer.start_shopping(self)
             return True
         return False
 
-    def leave_customer(self, customer: Customer) -> bool:
+    def leave_customer(self, customer) -> bool:
         if len(self.waiting_list) > 0:
             self.waiting_list.remove(customer)
             customer.end_shopping()
