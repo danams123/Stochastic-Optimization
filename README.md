@@ -1,2 +1,4 @@
 # Stochastic-Optimization
-requirement
+# Requirements
+- python installed 
+# Install and Run
